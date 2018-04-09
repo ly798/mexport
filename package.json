@@ -1,0 +1,67 @@
+{
+    "name": "mexport",
+    "displayName": "mexport",
+    "description": "Convert markdown to a different format.",
+    "version": "0.0.1",
+    "publisher": "ly798",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.asFile",
+        "onCommand:extension.asBuffer"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "mexport Option Configuration",
+            "properties": {
+                "mexportPandoc.pdfOptString": {
+                    "type": "string",
+                    "default": "",
+                    "description": "pandoc .pdf output option template that you would like to use"
+                },
+                "mexportPandoc.docxOptString": {
+                    "type": "string",
+                    "default": "",
+                    "description": "pandoc .docx output option template that you would like to use"
+                },
+                "mexportPandoc.htmlOptString": {
+                    "type": "string",
+                    "default": "",
+                    "description": "pandoc .html output option template that you would like to use"
+                },
+                "mexportPandoc.dokuwikiOptString": {
+                    "type": "string",
+                    "default": "",
+                    "description": "pandoc dokuwiki output option template that you would like to use"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "extension.asFile",
+                "title": "Mexport: As File"
+            },
+            {
+                "command": "extension.asBuffer",
+                "title": "Mexport: As Buffer"
+            }
+        ]
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "eslint": "^4.11.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
