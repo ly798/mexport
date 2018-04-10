@@ -5,14 +5,14 @@ const exec = require('child_process').exec;
 const execSync = require('child_process').execSync;
 const path = require('path');
 
-function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
-    console.log('exec');
 
+function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
     var space = '\x20';
     var cmd = 'pandoc' + space + '-t' + space + pandocFormat + space + inFile + space + '-o' + space + outFile + space + pandocOptions;
     exec(cmd, function (error, stdout, stderr) {
         if (stdout !== null) {
-            vscode.window.showInformationMessage('convert success');
+            vscode.window.showInformationMessage('Successful export to' + outFile + '.');
+            //TODO: open the outFile in vscode
         }
     })
 }
@@ -30,10 +30,26 @@ function export_to_file(toBuffer) {
     var fileNameOnly = path.parse(fileName).name;
 
     var items = [];
-    items.push({ label: 'pdf', suffix: 'pdf', description: 'Render as pdf document' });
-    items.push({ label: 'docx', suffix: 'docx', description: 'Render as word document' });
-    items.push({ label: 'html', suffix: 'html', description: 'Render as html document' });
-    items.push({ label: 'dokuwiki', suffix: 'txt', description: 'Render as dokuwiki document' });
+    items.push({
+        label: 'pdf',
+        suffix: 'pdf',
+        description: 'Render as pdf document'
+    });
+    items.push({
+        label: 'docx',
+        suffix: 'docx',
+        description: 'Render as word document'
+    });
+    items.push({
+        label: 'html',
+        suffix: 'html',
+        description: 'Render as html document'
+    });
+    items.push({
+        label: 'dokuwiki',
+        suffix: 'txt',
+        description: 'Render as dokuwiki document'
+    });
 
     vscode.window.showQuickPick(items).then((selection) => {
         if (!selection) {
@@ -47,7 +63,6 @@ function export_to_file(toBuffer) {
         if (toBuffer) {
             outFile = (path.join(path.normalize(gen_tmp_file()), fileNameOnly) + '.' + selection.suffix).replace(/(^.*$)/gm, "\"" + "$1" + "\"");
         }
-        console.log(outFile);
         exec_pandoc(inFile, outFile, pandocFormat, pandocOptions)
     })
 }
@@ -59,21 +74,18 @@ function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "mexport" is now active!');
-
-    let disposable = vscode.commands.registerCommand('extension.asFile', function () {
+    let asFilePro = vscode.commands.registerCommand('extension.asFile', function () {
         export_to_file(false)
-        vscode.window.showInformationMessage('Hello World!');
     });
-    context.subscriptions.push(disposable);
+    context.subscriptions.push(asFilePro);
 
-    let saySample = vscode.commands.registerCommand('extension.asBuffer', () => {
+    let asBufferPro = vscode.commands.registerCommand('extension.asBuffer', () => {
         export_to_file(true)
     });
-    context.subscriptions.push(saySample);
+    context.subscriptions.push(asBufferPro);
 }
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
-function deactivate() {
-}
+function deactivate() {}
 exports.deactivate = deactivate;

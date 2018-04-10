@@ -10,6 +10,14 @@
     "categories": [
         "Other"
     ],
+    "bugs": {
+        "url": "https://github.com/ly798/mexport/issues"
+    },
+    "homepage": "https://github.com/ly798/mexport/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ly798/mexport.git"
+    },
     "activationEvents": [
         "onCommand:extension.asFile",
         "onCommand:extension.asBuffer"
@@ -22,7 +30,7 @@
             "properties": {
                 "mexportPandoc.pdfOptString": {
                     "type": "string",
-                    "default": "",
+                    "default": "--pdf-engine=xelatex'",
                     "description": "pandoc .pdf output option template that you would like to use"
                 },
                 "mexportPandoc.docxOptString": {
@@ -42,8 +50,7 @@
                 }
             }
         },
-        "commands": [
-            {
+        "commands": [{
                 "command": "extension.asFile",
                 "title": "Mexport: As File"
             },
