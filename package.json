@@ -30,7 +30,7 @@
             "properties": {
                 "mexportPandoc.pdfOptString": {
                     "type": "string",
-                    "default": "--pdf-engine=xelatex'",
+                    "default": "--pdf-engine=xelatex",
                     "description": "pandoc .pdf output option template that you would like to use"
                 },
                 "mexportPandoc.docxOptString": {
