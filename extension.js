@@ -7,12 +7,25 @@ const path = require('path');
 
 
 function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
+    var needDisplaySuffix = ['txt', 'html']
     var space = '\x20';
     var cmd = 'pandoc' + space + '-t' + space + pandocFormat + space + inFile + space + '-o' + space + outFile + space + pandocOptions;
     exec(cmd, function (error, stdout, stderr) {
         if (stdout !== null) {
+            //fix path
+            outFile = outFile.substring(0, outFile.length - 1);
+            outFile = outFile.substring(1, outFile.length);
             vscode.window.showInformationMessage('Successful export to' + outFile + '.');
-            //TODO: open the outFile in vscode
+
+            //get suffix
+            suffix = outFile.split('.').pop()
+            for (index in needDisplaySuffix) {
+                if (suffix == needDisplaySuffix[index]) {
+                    vscode.workspace.openTextDocument(vscode.Uri.parse('file://' + outFile)).then(doc => {
+                        vscode.window.showTextDocument(doc);
+                    });
+                }
+            }
         }
     })
 }
