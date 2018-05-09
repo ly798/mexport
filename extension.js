@@ -7,9 +7,10 @@ const path = require('path');
 
 
 function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
-    var needDisplaySuffix = ['txt', 'html']
+    var needDisplaySuffix = ['txt', 'html', 'org']
     var space = '\x20';
     var cmd = 'pandoc' + space + '-t' + space + pandocFormat + space + inFile + space + '-o' + space + outFile + space + pandocOptions;
+    console.log('exec: ' + cmd);
     exec(cmd, function (error, stdout, stderr) {
         if (stdout !== null) {
             //fix path
@@ -62,6 +63,11 @@ function export_to_file(toBuffer) {
         label: 'dokuwiki',
         suffix: 'txt',
         description: 'Render as dokuwiki document'
+    });
+    items.push({
+        label: 'org',
+        suffix: 'org',
+        description: 'Render as org document'
     });
 
     vscode.window.showQuickPick(items).then((selection) => {

@@ -47,6 +47,11 @@
                     "type": "string",
                     "default": "",
                     "description": "pandoc dokuwiki output option template that you would like to use"
+                },
+                "mexportPandoc.orgOptString": {
+                    "type": "string",
+                    "default": "",
+                    "description": "pandoc org output option template that you would like to use"
                 }
             }
         },
