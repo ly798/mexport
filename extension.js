@@ -6,7 +6,7 @@ const execSync = require('child_process').execSync;
 const path = require('path');
 
 
-function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
+function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions, toBuffer) {
     var needDisplaySuffix = ['txt', 'html', 'org']
     var space = '\x20';
     var cmd = 'pandoc' + space + '-t' + space + pandocFormat + space + inFile + space + '-o' + space + outFile + space + pandocOptions;
@@ -16,7 +16,10 @@ function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
             //fix path
             outFile = outFile.substring(0, outFile.length - 1);
             outFile = outFile.substring(1, outFile.length);
-            vscode.window.showInformationMessage('Successful export to' + outFile + '.');
+
+            if (!toBuffer) {
+                vscode.window.showInformationMessage('Successful export to' + outFile + '.');
+            }
 
             //get suffix
             suffix = outFile.split('.').pop()
@@ -25,6 +28,7 @@ function exec_pandoc(inFile, outFile, pandocFormat, pandocOptions) {
                     vscode.workspace.openTextDocument(vscode.Uri.parse('file://' + outFile)).then(doc => {
                         vscode.window.showTextDocument(doc);
                     });
+
                 }
             }
         }
@@ -82,7 +86,7 @@ function export_to_file(toBuffer) {
         if (toBuffer) {
             outFile = (path.join(path.normalize(gen_tmp_file()), fileNameOnly) + '.' + selection.suffix).replace(/(^.*$)/gm, "\"" + "$1" + "\"");
         }
-        exec_pandoc(inFile, outFile, pandocFormat, pandocOptions)
+        exec_pandoc(inFile, outFile, pandocFormat, pandocOptions, toBuffer)
     })
 }
 
