@@ -1,6 +1,6 @@
 # mexport
 
-The mexport can export markdown to pdf, docx, html, dokuwiki.
+The mexport can export markdown to pdf, docx, html, dokuwiki, org.
 
 ## Prerequisites
 
@@ -15,7 +15,8 @@ The mexport can export markdown to pdf, docx, html, dokuwiki.
 
 ## Todo
 
-null
+- Support for more formats
+- Use the system application to open?
 
 ## Refer
 
