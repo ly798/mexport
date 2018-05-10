@@ -49,16 +49,6 @@ function export_to_file(toBuffer) {
 
     var items = [];
     items.push({
-        label: 'pdf',
-        suffix: 'pdf',
-        description: 'Render as pdf document'
-    });
-    items.push({
-        label: 'docx',
-        suffix: 'docx',
-        description: 'Render as word document'
-    });
-    items.push({
         label: 'html',
         suffix: 'html',
         description: 'Render as html document'
@@ -73,6 +63,18 @@ function export_to_file(toBuffer) {
         suffix: 'org',
         description: 'Render as org document'
     });
+    if (!toBuffer) {
+        items.push({
+            label: 'pdf',
+            suffix: 'pdf',
+            description: 'Render as pdf document'
+        });
+        items.push({
+            label: 'docx',
+            suffix: 'docx',
+            description: 'Render as word document'
+        });
+    }
 
     vscode.window.showQuickPick(items).then((selection) => {
         if (!selection) {
